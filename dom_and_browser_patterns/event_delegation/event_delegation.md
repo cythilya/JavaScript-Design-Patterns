@@ -1,4 +1,4 @@
-#JavaScript - Event Delegation 事件委派
+#Event Delegation 事件委派
 ##範例
 Event Delegation (事件委派) 是一種受惠於Event Bubbling而能減少監聽器數目的方法。
 
