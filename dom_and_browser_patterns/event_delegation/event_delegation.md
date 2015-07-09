@@ -13,7 +13,7 @@ Event Delegation (事件委派) 是一種受惠於Event Bubbling而能減少監�
 	    console.log($(this).data('name'));   
 	});
 
-[完整程式碼](dom_and_browser_patterns/event_delegation/event_delegation.html)
+[完整程式碼](event_delegation/event_delegation.html)
 
 ##程式碼解說
 當我們click不同的小區塊時，就會console出它們個別的名字，例如：a、b或c。  
