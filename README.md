@@ -1,1 +1,34 @@
-# JavaScript-Design-Patterns
+#JavaScript Patterns
+##Design Patterns
+- Singleton
+- Factory
+- Iterator
+- Decorator
+- Strategy
+- Facade
+- Proxy
+- Mediator
+- Observer
+##DOM and Browser Patterns
+- DOM Scripting
+- Events
+	- Event Delegation
+- Long-Running Scripts
+	- Web Workers
+- Remote Scripting
+	- XMLHttpRequest 
+	- JSONP
+	- Frames and Image Beacons
+- Deploying JavaScript
+	- Combining Scripts
+	- Minifying and Compressing
+		- gzip 
+	- Expires Header
+	- Using a CDN 
+- Loading Strategies
+	- The Place of the <script> Element
+	- HTTP Chunking
+	- Dynamic <script> Element for Nonblocking Downloads
+	- Lazy-Loading
+	- Loading on Demand
+	- Preloading JavaScript
