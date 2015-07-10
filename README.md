@@ -9,12 +9,13 @@
 - Proxy
 - Mediator
 - Observer
+
 ##DOM and Browser Patterns
 - DOM Scripting
 - Events
 	- [Event Delegation](dom_and_browser_patterns/event_delegation/event_delegation.md)
 - Long-Running Scripts
-	- Web Workers
+	- [Web Workers](web_workers/web_workers.md)
 - Remote Scripting
 	- XMLHttpRequest 
 	- JSONP
