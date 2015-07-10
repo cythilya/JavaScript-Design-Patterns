@@ -169,5 +169,5 @@ Sol 1與Sol 2解決了「儲存在Closure中的實體」的問題：
 
 ---
 ####推薦閱讀 / 參考文件
-- [從實例學Design Patterns](http://slides.com/jaceju/design-patterns-by-examples/#/)
-- [JavaScript Design Pattern - Singleton 單體模式](http://cythilya.blogspot.tw/2015/06/javascript-design-pattern-singleton.html)
+- [從實例學Design Patterns](http://slides.com/jaceju/design-patterns-by-examples/#/)：學方法也要想想到底需要解決的問題是什麼？參透它吧！
+- [JavaScript Design Pattern - Singleton 單體模式](http://cythilya.blogspot.tw/2015/06/javascript-design-pattern-singleton.html)：網誌版。
