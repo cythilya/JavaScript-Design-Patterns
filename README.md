@@ -29,7 +29,7 @@
 - Loading Strategies
 	- The Place of the `<script>` Element
 	- HTTP Chunking
-	- Dynamic <script> Element for Nonblocking Downloads
+	- Dynamic `<script>` Element for Nonblocking Downloads
 	- Lazy-Loading
 	- Loading on Demand
 	- Preloading JavaScript
