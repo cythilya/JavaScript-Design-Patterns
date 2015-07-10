@@ -33,3 +33,5 @@
 	- Lazy-Loading
 	- Loading on Demand
 	- Preloading JavaScript
+
+---
