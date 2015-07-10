@@ -1,6 +1,6 @@
 #JavaScript Patterns
 ##Design Patterns
-- Singleton
+- [Singleton](singleton/singleton.md)
 - Factory
 - Iterator
 - Decorator

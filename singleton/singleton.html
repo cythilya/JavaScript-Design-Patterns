@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Singleton</title>
+</head>
+<body>
+<script>
+var obj = {
+	myProp: 'myValue'
+};
+
+var obj2 = {
+	myProp: 'myValue'
+};
+
+console.log('obj === obj2');
+console.log(obj === obj2); //false
+console.log('----------------------------------');
+//-----------------------------------------------
+//儲存在靜態屬性中的實體
+function Universe(){
+	if(typeof Universe.instance === 'object'){
+		return Universe.instance;
+	}
+
+	this.start_time = 0;
+	this.bang = 'Big';
+
+	Universe.instance = this;
+};
+
+var uni = new Universe();
+var uni2 = new Universe();
+console.log('uni === uni2');
+console.log(uni === uni2); //true
+
+Universe.instance = null; //公開屬性，被修改了...
+var uni3 = new Universe();
+console.log(uni === uni3); //false
+console.log('----------------------------------');
+//-----------------------------------------------
+//儲存在Closure中的實體
+UniverseC.prototype.inNothing = true;
+
+function UniverseC(){
+	var instance = this;
+
+	this.start_time = 0;
+	this.bang = 'Big';
+
+	//重新定義建構式
+	UniverseC = function(){
+		return instance;
+	};
+};
+
+var uni4 = new UniverseC();
+var uni5 = new UniverseC();
+console.log('uni4 === uni5');
+console.log(uni4 === uni5); //true
+console.log('----------------------------------');
+
+//測試是否遺失之後加上去的屬性
+UniverseC.prototype.inEverything = true;
+var uni6 = new UniverseC();
+
+console.log(uni4.inNothing); //true
+console.log(uni4.inEverything); //undefined
+console.log(uni6.inNothing); //true
+console.log(uni6.inEverything); //undefined
+
+console.log('----------------------------------');
+console.log(uni4.constructor.name); //UniverseC
+console.log(uni4.constructor === UniverseC); //false
+
+console.log(uni4.constructor); //最初定義的UniverseC
+console.log(UniverseC); //重新定義的UniverseC
+console.log('----------------------------------');
+//-----------------------------------------------
+//修改儲存在Closure中的實體
+UniverseM.prototype.inNothing = true;
+function UniverseM(){
+	var instance;
+
+	UniverseM = function UniverseM(){
+		return instance;
+	};
+
+	UniverseM.prototype = this;
+	instance = new UniverseM();
+	instance.constructor = UniverseM();
+
+	instance.start_time = 0;
+	instance.bang = 'Big';
+
+	return instance;
+};
+
+var uni7 = new UniverseM();
+var uni8 = new UniverseM();
+
+console.log(uni7 === uni8); //true
+
+UniverseM.prototype.inEverything = true;
+console.log(uni7.constructor === UniverseM); //true
+
+console.log(uni7.constructor); //最初定義的UniverseM
+console.log(UniverseM); //重新定義的UniverseM
+console.log('----------------------------------');
+//-----------------------------------------------
+var UniverseN;
+(function(){
+	var instance;
+	UniverseN = function UniverseN(){
+		if(instance){
+			return instance;
+		}
+		instance = this;
+
+		this.start_time = 0;
+		this.bang = 'Big';
+	};
+}());
+
+var uni9 = new UniverseN();
+var uni10 = new UniverseN();
+
+console.log(uni9 === uni10); //true
+
+UniverseN.prototype.inEverything = true;
+console.log(uni9.constructor === UniverseN); //true
+
+console.log(uni9.constructor); //最初定義的UniverseN
+console.log(UniverseN); //重新定義的UniverseN
+console.log('----------------------------------');
+</script>
+</body>
+</html>
