@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Factory</title>
+</head>
+<body>
+<script>
+function CarMaker(){};
+
+CarMaker.prototype.drive = function(){
+	return 'Vroom, I have ' + this.doors + ' doors';
+};
+
+CarMaker.factory = function(type){
+	var constr = type,
+		newcar;
+
+	if(typeof CarMaker[constr] !== 'function'){
+		throw {
+			name: 'Error',
+			message: constr + ' does not exist'
+		};
+	}
+
+	if(typeof CarMaker[constr].prototype.drive !== 'function'){
+		CarMaker[constr].prototype = new CarMaker();
+	}
+
+	newcar = new CarMaker[constr]();
+	return newcar;
+};
+
+
+CarMaker.Compact = function(){
+	this.doors = 4;
+};
+
+CarMaker.Convertible = function(){
+	this.doors = 2;
+};
+
+CarMaker.SUV = function(){
+	this.doors = 24;
+};
+
+var corolla = CarMaker.factory('Compact');
+var soltice = CarMaker.factory('Convertible');
+var cherokee = CarMaker.factory('SUV');
+
+console.log(corolla.drive()); //Vroom, I have 4 doors
+console.log(soltice.drive()); //Vroom, I have 2 doors
+console.log(cherokee.drive()); //Vroom, I have 24 doors
+
+//Object建構式
+var o = new Object(),
+	n = new Object(1),
+	s = new Object('1'),
+	b = new Object(true);
+
+console.log(o.constructor === Object); //true
+console.log(n.constructor === Number); //true
+console.log(s.constructor === String); //true
+console.log(b.constructor === Boolean); //true
+</script>
+</body>
+</html>
