@@ -3,7 +3,7 @@
 - [Singleton 單體模式](singleton/singleton.md)
 - [Factory 工廠模式](factory/factory.md)
 - [Iterator 迭代器模式](iterator/iterator.md)
-- Decorator
+- [Decorator 裝飾者模式](decorator/decorator.md)
 - Strategy
 - Facade
 - Proxy

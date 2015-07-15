@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>$title</title>
+</head>
+<body>
+<div id="playground"></div>
+<script>
+//example 
+function decorator(func) {
+	return function() {
+    	return func.apply(this, arguments);
+  	}
+}
+ 
+function sum(a, b) {
+	return a + b;
+}
+ 
+var getSum = decorator(sum);
+
+console.log( getSum(1,2) ); //3
+console.log( getSum(2,3) ); //5
+
+//example
+var MacBook = function(){
+	this.cost = function(){return 41900};
+	this.screenSize = function(){return 12}
+};
+
+var mb = new MacBook();
+
+var MacBookWithLargeMemory = function(){
+	MacBook.call(this);
+	this.cost = this.cost() + 10000;
+};
+
+var MacBookWithEngraving = function(){
+	MacBook.call(this);
+	this.cost = this.cost() + 1000;
+};
+
+var MacBookWithInsurance = function(){
+	MacBook.call(this);
+	this.cost = this.cost() + 8590;
+};
+
+var MacBookWithLargeEngravingInsurance = function(){
+	MacBook.call(this);
+	this.cost = this.cost() + 10000 + 1000 + 8590;
+};
+
+MacBookWithLargeMemory.prototype = Object.create(MacBook.prototype);
+
+var mbWithLargeMemory = new MacBookWithLargeMemory();
+console.log(mbWithLargeMemory); //51900
+
+var mbWithEngraving = new MacBookWithEngraving();
+console.log(mbWithEngraving); //42900
+
+var mbWithInsurance = new MacBookWithInsurance();
+console.log(mbWithInsurance); //50490
+
+var mbWithLargeEngravingInsurance = new MacBookWithLargeEngravingInsurance();
+console.log(mbWithLargeEngravingInsurance); //61490
+
+//example
+function MacBook(){
+	this.cost = function(){return 41900};
+	this.screenSize = function(){return 12}
+}
+
+//Decorator 1
+function Memory(mackbook){
+	var v = mackbook.cost();
+	mackbook.cost = function(){
+		return v + 10000;
+	}
+}
+
+//Decorator 2
+function Engraving(mackbook){
+	var v = mackbook.cost();
+	mackbook.cost = function(){
+		return v + 1000;
+	}
+}
+
+//Decorator 3
+function Insurance(mackbook){
+	var v = mackbook.cost();
+	mackbook.cost = function(){
+		return v + 8590;
+	}
+}
+
+var mb = new MacBook();
+Memory(mb);
+console.log(mb.cost()); //51900
+
+Engraving(mb);
+console.log(mb.cost()); //52900
+
+Insurance(mb);
+console.log(mb.cost()); //61490
+console.log(mb.screenSize()); //12
+</script>
+</body>
+</html>
