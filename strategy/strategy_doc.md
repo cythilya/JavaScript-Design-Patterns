@@ -1,5 +1,7 @@
 #JavaScript Design Pattern - Strategy 策略模式
-JavaScript Design Pattern 「Strategy 策略模式」 筆記。 策略模式將各個方法封裝起來，在執行期間再選擇適當的演算法。  
+JavaScript Design Pattern 「Strategy 策略模式」 筆記。  
+
+策略模式將各個方法封裝起來，在執行期間選擇適當的演算法。  
 
 ##範例
 假設我們想驗證一些資料，其中想驗證各欄位
@@ -11,7 +13,39 @@ JavaScript Design Pattern 「Strategy 策略模式」 筆記。 策略模式將�
 - 字串大小是否在最小範圍內，設定為3個characters以上(minSize)
 - 字串大小是否在最大範圍內，設定為10個characters以內(maxSize)
 
+我們可以使用傳統的「Switch-Case」或「If-Else」寫法(如下)，但若需求變更則必須回來維護這段程式碼 (參考自[深入理解JavaScript系列（33）：設計模式之策略模式- 湯姆大叔- 博客園](http://www.cnblogs.com/TomXu/archive/2012/03/05/2358552.html))。
+
+	//一般的寫法
+	validator = {
+	    validate: function(value, type) {
+	        switch (type) {
+	            case 'isNonEmpty':
+	            {
+	                return true;
+	            }
+	            case 'isNumber':
+	            {
+	                return true; 
+	            }
+	            case 'isAlphaNum':
+	            {
+	                return true; 
+	            }
+	            default:
+	            {
+	                return true;
+	            }
+	        }
+	    }
+	}; 
+	//測試 
+	var result = validator.validate("123", "isNonEmpty");
+	console.log(result); //ture
+
+比較好的寫法是使用「Strategy 策略模式」，單獨定義演算方式，不僅容易維護，也方便測試，
+
 ###程式碼解說
+改寫上面的資料驗證程式碼。
 
 	var validator = {
 		types: {}, //所有的驗證規則皆會存放於此，稍後會個別定義
@@ -53,7 +87,8 @@ JavaScript Design Pattern 「Strategy 策略模式」 筆記。 策略模式將�
 		}
 	};
 	
-	//checks for non-empty values
+	//個別定義驗證規則
+	//欄位值不可為空
 	validator.types.isNonEmpty = {
 		validate:function (value) {
 			return value !== "";
@@ -61,7 +96,7 @@ JavaScript Design Pattern 「Strategy 策略模式」 筆記。 策略模式將�
 		instructions: "the value cannot be empty"
 	};
 	
-	//checks if a value is a number
+	//欄位值只能為數字
 	validator.types.isNumber = {
 		validate:function (value) {
 			return !isNaN(value);
@@ -69,7 +104,7 @@ JavaScript Design Pattern 「Strategy 策略模式」 筆記。 策略模式將�
 		instructions: "the value can only be a valid number, e.g. 1, 3.14 or 2010"
 	};
 	
-	//checks if the value contains only letters and numbers
+	//欄位值是否為英數組合
 	validator.types.isAlphaNum = {
 		validate:function (value) {
 			return !/[^a-z0-9]/i.test(value);
@@ -77,6 +112,7 @@ JavaScript Design Pattern 「Strategy 策略模式」 筆記。 策略模式將�
 		instructions: "the value can only contain characters and numbers, no special symbols"
 	};
 	
+	//欄位值是否為Email
 	validator.types.isEmail = {
 		validate: function(value){
 			var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
@@ -85,6 +121,7 @@ JavaScript Design Pattern 「Strategy 策略模式」 筆記。 策略模式將�
 		instructions: 'use valid email format, e.g. @'
 	};
 	
+	//欄位值有最小長度限制，字串大小是否在最小範圍內，設定為3個characters以上(minSize)
 	validator.types.minSize = {
 		validate: function(value){
 	    	return value.length >= 3;		
@@ -92,6 +129,7 @@ JavaScript Design Pattern 「Strategy 策略模式」 筆記。 策略模式將�
 		instructions: 'min size is 3 characters'
 	};
 	
+	//欄位值有最大長度限制，字串大小是否在最大範圍內，設定為10個characters以內(maxSize)
 	validator.types.maxSize = {
 		validate: function(value){
 			return value.length <= 10;
@@ -99,7 +137,7 @@ JavaScript Design Pattern 「Strategy 策略模式」 筆記。 策略模式將�
 		instructions: 'max size is 10 characters'
 	};
 	
-	//test
+	//測試資料
 	var data = {
 		first_name: 'Super',
 		last_name: 'Man',
@@ -110,6 +148,7 @@ JavaScript Design Pattern 「Strategy 策略模式」 筆記。 策略模式將�
 		password: '12'
 	};
 	
+	//定義測試資料每個欄位需要被驗證的類型
 	validator.config = {
 		first_name: 'isNonEmpty',
 		last_name: 'maxSize',
@@ -120,6 +159,7 @@ JavaScript Design Pattern 「Strategy 策略模式」 筆記。 策略模式將�
 		password: 'minSize'	
 	};
 	
+	//若有錯誤，則console出錯誤訊息
 	validator.validate(data);
 	if (validator.hasErrors()) {
 		console.log(validator.messages.join("\n"));

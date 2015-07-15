@@ -47,7 +47,8 @@
 		}
 	};
 	
-	//checks for non-empty values
+	//個別定義驗證規則
+	//欄位值不可為空
 	validator.types.isNonEmpty = {
 		validate:function (value) {
 			return value !== "";
@@ -55,7 +56,7 @@
 		instructions: "the value cannot be empty"
 	};
 	
-	//checks if a value is a number
+	//欄位值只能為數字
 	validator.types.isNumber = {
 		validate:function (value) {
 			return !isNaN(value);
@@ -63,7 +64,7 @@
 		instructions: "the value can only be a valid number, e.g. 1, 3.14 or 2010"
 	};
 	
-	//checks if the value contains only letters and numbers
+	//欄位值是否為英數組合
 	validator.types.isAlphaNum = {
 		validate:function (value) {
 			return !/[^a-z0-9]/i.test(value);
@@ -71,6 +72,7 @@
 		instructions: "the value can only contain characters and numbers, no special symbols"
 	};
 	
+	//欄位值是否為Email
 	validator.types.isEmail = {
 		validate: function(value){
 			var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
@@ -79,6 +81,7 @@
 		instructions: 'use valid email format, e.g. @'
 	};
 	
+	//欄位值有最小長度限制，字串大小是否在最小範圍內，設定為3個characters以上(minSize)
 	validator.types.minSize = {
 		validate: function(value){
 	    	return value.length >= 3;		
@@ -86,6 +89,7 @@
 		instructions: 'min size is 3 characters'
 	};
 	
+	//欄位值有最大長度限制，字串大小是否在最大範圍內，設定為10個characters以內(maxSize)
 	validator.types.maxSize = {
 		validate: function(value){
 			return value.length <= 10;
@@ -93,7 +97,7 @@
 		instructions: 'max size is 10 characters'
 	};
 	
-	//test
+	//測試資料
 	var data = {
 		first_name: 'Super',
 		last_name: 'Man',
@@ -104,6 +108,7 @@
 		password: '12'
 	};
 	
+	//定義測試資料每個欄位需要被驗證的類型
 	validator.config = {
 		first_name: 'isNonEmpty',
 		last_name: 'maxSize',
@@ -114,6 +119,7 @@
 		password: 'minSize'	
 	};
 	
+	//若有錯誤，則console出錯誤訊息
 	validator.validate(data);
 	if (validator.hasErrors()) {
 		console.log(validator.messages.join("\n"));
