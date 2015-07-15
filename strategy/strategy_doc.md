@@ -1,4 +1,4 @@
-#JavaScript Design Pattern - Strategy 策略模式
+#Strategy 策略模式
 JavaScript Design Pattern 「Strategy 策略模式」 筆記。  
 
 策略模式將各個方法封裝起來，在執行期間選擇適當的演算法。  
