@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>JavaScript Design Pattern - Strategy 策略模式</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0}body{font-family:Helvetica,arial,freesans,clean,sans-serif;font-size:14px;line-height:1.6;color:#333;background-color:#fff;padding:20px;max-width:960px;margin:0 auto}body>:first-child{margin-top:0!important}body>:last-child{margin-bottom:0!important}p,blockquote,ul,ol,dl,table,pre{margin:15px 0}h1,h2,h3,h4,h5,h6{margin:20px 0 10px;padding:0;font-weight:700;-webkit-font-smoothing:antialiased}h1 tt,h1 code,h2 tt,h2 code,h3 tt,h3 code,h4 tt,h4 code,h5 tt,h5 code,h6 tt,h6 code{font-size:inherit}h1{font-size:28px;color:#000}h2{font-size:24px;border-bottom:1px solid #ccc;color:#000}h3{font-size:18px}h4{font-size:16px}h5{font-size:14px}h6{color:#777;font-size:14px}body>h2:first-child,body>h1:first-child,body>h1:first-child+h2,body>h3:first-child,body>h4:first-child,body>h5:first-child,body>h6:first-child{margin-top:0;padding-top:0}a:first-child h1,a:first-child h2,a:first-child h3,a:first-child h4,a:first-child h5,a:first-child h6{margin-top:0;padding-top:0}h1+p,h2+p,h3+p,h4+p,h5+p,h6+p{margin-top:10px}a{color:#4183C4;text-decoration:none}a:hover{text-decoration:underline}ul,ol{padding-left:30px}ul li > :first-child,ol li > :first-child,ul li ul:first-of-type,ol li ol:first-of-type,ul li ol:first-of-type,ol li ul:first-of-type{margin-top:0}ul ul,ul ol,ol ol,ol ul{margin-bottom:0}dl{padding:0}dl dt{font-size:14px;font-weight:700;font-style:italic;padding:0;margin:15px 0 5px}dl dt:first-child{padding:0}dl dt>:first-child{margin-top:0}dl dt>:last-child{margin-bottom:0}dl dd{margin:0 0 15px;padding:0 15px}dl dd>:first-child{margin-top:0}dl dd>:last-child{margin-bottom:0}pre,code,tt{font-size:12px;font-family:Consolas,"Liberation Mono",Courier,monospace}code,tt{margin:0;padding:0;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre>code{margin:0;padding:0;white-space:pre;border:none;background:transparent}pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}pre code,pre tt{background-color:transparent;border:none}kbd{-moz-border-bottom-colors:none;-moz-border-left-colors:none;-moz-border-right-colors:none;-moz-border-top-colors:none;background-color:#DDD;background-image:linear-gradient(#F1F1F1,#DDD);background-repeat:repeat-x;border-color:#DDD #CCC #CCC #DDD;border-image:none;border-radius:2px 2px 2px 2px;border-style:solid;border-width:1px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;line-height:10px;padding:1px 4px}blockquote{border-left:4px solid #DDD;padding:0 15px;color:#777}blockquote>:first-child{margin-top:0}blockquote>:last-child{margin-bottom:0}hr{clear:both;margin:15px 0;height:0;overflow:hidden;border:none;background:transparent;border-bottom:4px solid #ddd;padding:0}table th{font-weight:700}table th,table td{border:1px solid #ccc;padding:6px 13px}table tr{border-top:1px solid #ccc;background-color:#fff}table tr:nth-child(2n){background-color:#f8f8f8}img{max-width:100%}</style>
+</head>
+<body>
+<p><img src="https://lh3.googleusercontent.com/EeR3h1FM4TxYLh8j_j4feYS0dGKwVoLB-WDVmy8yMtg=w800-h494-no" alt="JavaScript Design Pattern - Strategy 策略模式" /></p>
+<p>JavaScript Design Pattern 「Strategy 策略模式」 筆記。  </p>
+<!-- more -->
+<p>策略模式將各個方法封裝起來，在執行期間選擇適當的演算法。  </p>
+<h2>範例</h2>
+<p>假設我們想驗證一些資料，其中想驗證各欄位</p>
+<ul>
+<li>是否為空(isNonEmpty)</li>
+<li>是否只填數字(isNumber)</li>
+<li>是否只填英數(isAlphaNum)</li>
+<li>是否為Email(isEmail)</li>
+<li>字串大小是否在最小範圍內，設定為3個characters以上(minSize)</li>
+<li>字串大小是否在最大範圍內，設定為10個characters以內(maxSize)</li>
+</ul>
+<p>我們可以使用傳統的「Switch-Case」或「If-Else」寫法(如下)，但若需求變更則必須回來維護這段程式碼 (參考自<a target="_blank" href="http://www.cnblogs.com/TomXu/archive/2012/03/05/2358552.html">深入理解JavaScript系列（33）：設計模式之策略模式- 湯姆大叔- 博客園</a>)。</p>
+<pre><code>//一般的寫法
+validator = {
+    validate: function(value, type) {
+        switch (type) {
+            case 'isNonEmpty':
+            {
+                return true;
+            }
+            case 'isNumber':
+            {
+                return true; 
+            }
+            case 'isAlphaNum':
+            {
+                return true; 
+            }
+            default:
+            {
+                return true;
+            }
+        }
+    }
+}; 
+//測試 
+var result = validator.validate(&quot;123&quot;, &quot;isNonEmpty&quot;);
+console.log(result); //ture
+</code></pre>
+
+<p>比較好的寫法是使用「Strategy 策略模式」，單獨定義演算方式，不僅容易維護，也方便測試，</p>
+<h3>程式碼解說</h3>
+<p>改寫上面的資料驗證程式碼。</p>
+<pre><code>var validator = {
+    types: {}, //所有的驗證規則皆會存放於此，稍後會個別定義
+    messages: [], //個別驗證類型的錯誤訊息
+    config: {}, //使用者資料各欄位需要被驗證的類型
+    validate: function (data) { // 使用者資料 - 欄位:值
+        var i,
+            msg,
+            type,
+            checker,
+            result_ok;
+        this.messages = []; //清空所有的錯誤信息
+
+        for(i in data) {
+            if(data.hasOwnProperty(i)) { //判斷使用者欄位是否需要被驗證
+                type = this.config[i]; //如果需要被驗證，則取出相對應的驗證規則
+                checker = this.types[type];
+                if(!type) {
+                    continue; //如果驗證規則不存在，則不處理
+                }
+                if(!checker) { //要檢測的規則和錯誤訊息不存在，無法檢測，拋出異常
+                    throw {
+                        name: &quot;ValidationError&quot;,
+                        message: &quot;No handler to validate type &quot; + type
+                    };
+                }
+                result_ok = checker.validate(data[i]); //驗證
+                if(!result_ok) { //取得錯誤訊息
+                    msg = &quot;Invalid value for *&quot; + i + &quot;*, &quot; + checker.instructions;
+                    this.messages.push(msg);
+                }
+            }
+        }
+        return this.hasErrors();
+    },
+    //helper
+    hasErrors:function () {
+        return this.messages.length !== 0;
+    }
+};
+
+//個別定義驗證規則
+//欄位值不可為空
+validator.types.isNonEmpty = {
+    validate:function (value) {
+        return value !== &quot;&quot;;
+    },
+    instructions: &quot;the value cannot be empty&quot;
+};
+
+//欄位值只能為數字
+validator.types.isNumber = {
+    validate:function (value) {
+        return !isNaN(value);
+    },
+    instructions: &quot;the value can only be a valid number, e.g. 1, 3.14 or 2010&quot;
+};
+
+//欄位值是否為英數組合
+validator.types.isAlphaNum = {
+    validate:function (value) {
+        return !/[^a-z0-9]/i.test(value);
+    },
+    instructions: &quot;the value can only contain characters and numbers, no special symbols&quot;
+};
+
+//欄位值是否為Email
+validator.types.isEmail = {
+    validate: function(value){
+        var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+        return re.test(value);      
+    },
+    instructions: 'use valid email format, e.g. @'
+};
+
+//欄位值有最小長度限制，字串大小是否在最小範圍內，設定為3個characters以上(minSize)
+validator.types.minSize = {
+    validate: function(value){
+        return value.length &gt;= 3;       
+    },
+    instructions: 'min size is 3 characters'
+};
+
+//欄位值有最大長度限制，字串大小是否在最大範圍內，設定為10個characters以內(maxSize)
+validator.types.maxSize = {
+    validate: function(value){
+        return value.length &lt;= 10;
+    },
+    instructions: 'max size is 10 characters'
+};
+
+//測試資料
+var data = {
+    first_name: 'Super',
+    last_name: 'Man',
+    age: 'unknown',
+    username: 'o_O',
+    email: 'example@gmail.com',
+    confirm_email: 'invalid_email_sample',
+    password: '12'
+};
+
+//定義測試資料每個欄位需要被驗證的類型
+validator.config = {
+    first_name: 'isNonEmpty',
+    last_name: 'maxSize',
+    age: 'isNumber',
+    username: 'isAlphaNum',
+    email: 'isEmail',
+    confirm_email: 'isEmail',
+    password: 'minSize' 
+};
+
+//若有錯誤，則console出錯誤訊息
+validator.validate(data);
+if (validator.hasErrors()) {
+    console.log(validator.messages.join(&quot;\n&quot;));
+}
+</code></pre>
+
+<p><a target="_blank" href="https://github.com/cythilya/JavaScript-Patterns/blob/master/strategy/strategy.html">看程式碼</a>。</p>
+<h3>Demo</h3>
+<p>console視窗顯示訊息如下：  </p>
+<pre><code>Invalid value for *age*, the value can only be a valid number, e.g. 1, 3.14 or 2010
+Invalid value for *username*, the value can only contain characters and numbers, no special symbols
+Invalid value for *confirm_email*, use valid email format, e.g. @
+Invalid value for *password*, min size is 3 characters
+</code></pre>
+
+<h2>簡單改寫為Plugin</h2>
+<p><img src="https://lh3.googleusercontent.com/1G4MFt-mnIqpULmLfYAFny9HmbFxaIs-H0adaFLSfSs=w668-h352-no" alt="JavaScript Design Pattern - Strategy 策略模式" />  </p>
+<p>Name欄位是要被檢測的，檢測條件為不可為空，而Mobile欄位不被檢測。因此當Name欄位有值(&quot;Apple&quot;或&quot;Hello&quot;時)，出現訊息「Everything is OK!」表示通過驗證；而Name欄位無值的時候，則出現錯誤訊息「Invalid value for <em>fieldName</em>, the value cannot be empty」。</p>
+<p><a target="_blank" href="https://github.com/cythilya/JavaScript-Patterns/blob/master/strategy/strategy_form_validate.html">看程式碼</a>。</p>
+<hr />
+<h4>推薦閱讀</h4>
+<ul>
+<li><a target="_blank" href="http://www.cnblogs.com/TomXu/archive/2012/03/05/2358552.html">深入理解JavaScript系列（33）：設計模式之策略模式- 湯姆大叔- 博客園</a></li>
+</ul>
+</body>
+</html>

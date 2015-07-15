@@ -175,6 +175,13 @@ console視窗顯示訊息如下：
 	Invalid value for *confirm_email*, use valid email format, e.g. @
 	Invalid value for *password*, min size is 3 characters
 
+##簡單改寫為Plugin
+![JavaScript Design Pattern - Strategy 策略模式](strategy_demo.gif)  
+
+Name欄位是要被檢測的，檢測條件為不可為空，而Mobile欄位不被檢測。因此當Name欄位有值("Apple"或"Hello"時)，出現訊息「Everything is OK!」表示通過驗證；而Name欄位無值的時候，則出現錯誤訊息「Invalid value for *fieldName*, the value cannot be empty」。
+
+[看程式碼](strategy_form_validate.html)。
+
 ---
 ####推薦閱讀
 - [深入理解JavaScript系列（33）：設計模式之策略模式- 湯姆大叔- 博客園](http://www.cnblogs.com/TomXu/archive/2012/03/05/2358552.html)

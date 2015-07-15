@@ -4,7 +4,7 @@
 - [Factory 工廠模式](factory/factory.md), [Demo](factory/factory.html)
 - [Iterator 迭代器模式](iterator/iterator.md), [Demo](iterator/iterator.html)
 - [Decorator 裝飾者模式](decorator/decorator.md), [Demo](decorator/decorators.html)
-- [Strategy 策略模式](strategy/strategy.md), [Demo](strategy/strategy.html)
+- [Strategy 策略模式](strategy/strategy.md), [Demo 1](strategy/strategy.html), [Demo 2](strategy/strategy_form_validate.html)
 - Facade
 - Proxy
 - Mediator
