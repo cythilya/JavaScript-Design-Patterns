@@ -1,9 +1,9 @@
 #JavaScript Patterns
 ##Design Patterns
-- [Singleton 單體模式](singleton/singleton.md)
-- [Factory 工廠模式](factory/factory.md)
-- [Iterator 迭代器模式](iterator/iterator.md)
-- [Decorator 裝飾者模式](decorator/decorator.md)
+- [Singleton 單體模式](singleton/singleton.md), [Demo](singleton/singleton.html)
+- [Factory 工廠模式](factory/factory.md), [Demo](factory/factory.html)
+- [Iterator 迭代器模式](iterator/iterator.md), [Demo](iterator/iterator.html)
+- [Decorator 裝飾者模式](decorator/decorator.md), [Demo](decorator/decorators.html)
 - Strategy
 - Facade
 - Proxy
