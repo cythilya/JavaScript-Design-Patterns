@@ -125,6 +125,5 @@ Decorator的優點就如同上例所示 - 可重覆利用(reuse)、彈性(flexib
 #### 推薦閱讀
 
 *   [Decorators](http://javascript.info/tutorial/decorators)
-*   [Learning JavaScript Design Patterns](http://it-ebooks.info/book/724)
 *   [JavaScript Design Patterns: Decorator](http://robdodson.me/javascript-design-patterns-decorator)
 *   [深入理解JavaScript系列（29）：設計模式之裝飾者模式- 湯姆大叔- 博客園](http://www.cnblogs.com/TomXu/archive/2012/02/24/2353434.html)
