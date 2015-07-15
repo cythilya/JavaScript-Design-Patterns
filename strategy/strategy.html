@@ -26,7 +26,7 @@ var validator = {
 				if(!type) {
 					continue; //如果驗證規則不存在，則不處理
 				}
-				if(!checker) { //如果驗證規則類不存在，拋出異常
+				if(!checker) { //要檢測的規則和錯誤訊息不存在，無法檢測，拋出異常
 					throw {
 						name: "ValidationError",
 						message: "No handler to validate type " + type
